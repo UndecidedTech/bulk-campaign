@@ -17,7 +17,7 @@ bodyObj = {
   "source_id": "5a0e2785-ca81-4c57-a541-52dab6a948d5",
   "priority": 2,
   "custom_replacement_fields": {
-    "provider_id": ""
+    "provider_name": ""
   },
   "desired_communication_channel": 1
 }
@@ -50,7 +50,7 @@ async function runScript() {
 
     const results = await parseJson(message, file);
     console.log("real results: ", results)
-    let label = message === "You are missing out on premium jobs!" ? "missing" : "invited";
+    let label = "available";
     fs.writeFileSync(`./results/${argv.f}_${label}_results.json`, JSON.stringify(results));
   } else {
     console.log("You must put a subject for the emails.");
@@ -68,13 +68,13 @@ async function parseJson(message, file) {
     let providerResult = await sendEmail(pFile[i], message);
     console.log("send example: ", providerResult)
     if (providerResult.status === "success") {
-      console.log("Succeeded for: ", pFile[i][4])
+      console.log("Succeeded for: ", pFile[i][0])
       success.push(providerResult);
     } else if (providerResult.status === "failed") {
-      console.log("Failed for: ", pFile[i][4])
+      console.log("Failed for: ", pFile[i][0])
       failed.push(providerResult);
     } else {
-      console.log("IS NOT A TARGET: ", pFile[i][4])
+      console.log("IS NOT A TARGET: ", pFile[i][0])
       not_target.push(providerResult);
     }
   }
@@ -86,38 +86,37 @@ async function sendEmail(provider, message) {
   let providerObj = {
     ...bodyObj,
     "custom_replacement_fields": {
-      "provider_id": provider[0],
-      "name": provider[4]
+      "provider_name": provider[0],
     },
     "recipient_list": [
       {
         "contact": {
-          "name": provider[4],
-          "email": provider[5]
+          "name": provider[0],
+          "email": provider[2]
         }
       }
     ]
   }
 
   const returnObject = {
-    "name": provider[4],
-    "email": provider[5],
-    "provider_id": provider[0]
+    "name": provider[0],
+    "email": provider[2],
+    "provider_id": provider[3]
   };
 
-  if (provider[3] === message) {
+  if (provider[4] === message) {
     let res = await axios.post(`${process.env.API_URL}`, providerObj);
     if (res.status === 200) {
-      console.log("Has been sent to: ", provider[4]);
+      console.log("Has been sent to: ", provider[0]);
       returnObject.status = "success";
       return returnObject
     } else {
-      console.log("Failed to send to: ", provider[4]);
+      console.log("Failed to send to: ", provider[0]);
       returnObject.status = "failed";
       return returnObject;
     }
   } else {
-    console.log(provider[4], " is not a target");
+    console.log(provider[0], " is not a target");
     returnObject.status = "not_target";
     return returnObject;
   }
