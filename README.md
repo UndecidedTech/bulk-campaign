@@ -26,6 +26,8 @@ provider[5] should be email
 # Usage
 
 ```bash
-  node bulkhelper -f ${file} -s ${subjectLine}
+  node bulkimproved.js
 ```
+
+[![asciicast](https://asciinema.org/a/PKIeqwe62AX98SOC4DzlXn9hk.svg)](https://asciinema.org/a/PKIeqwe62AX98SOC4DzlXn9hk)
 
