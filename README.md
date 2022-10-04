@@ -11,11 +11,9 @@ Make .env file
 API_URL="___API___URL___"
 ```
 
-Take provider excel spreadsheet and copy the rows to the [dataconverter](https://shancarter.github.io/mr-data-converter/) and convert to 2D array (Array rows) and copy the 2D array formatted data to a new json file
+Take provider excel spreadsheet and copy the rows to the [dataconverter](https://shancarter.github.io/mr-data-converter/) and convert to an array of objects and copy the formatted data to a new json file in the data/ directory.
 
-check that the name, email, and message are the correct indecies in the script
-
-NOTE: I want to add support for this in the future to recognize the headers so you don't need to check these fields manually.
+check that the email or phone number, name, and other relevant content are the correctly labeled in the data.
 ```
 provider[0] should be provider_id
 provider[3] should be message/subjectLine
