@@ -110,3 +110,4 @@ test.json
 data.json
 .results/
 results.json
+old-data/*

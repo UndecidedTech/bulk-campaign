@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/UndecidedTech/bulk-campaign.git"
@@ -19,6 +20,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "dotenv": "^16.0.1",
+    "inquirer": "^9.1.2",
     "yargs": "^17.5.1"
   }
 }
